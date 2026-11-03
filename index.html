@@ -68,7 +68,6 @@
   .btn-primary:hover { background: #a855f7; box-shadow: 0 0 38px -4px rgba(168,85,247,1); }
   .btn-ghost { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.14); color: #f4f4f7; }
   .btn-ghost:hover { border-color: rgba(168,85,247,.7); box-shadow: 0 0 26px -8px rgba(168,85,247,.8); background: rgba(168,85,247,.08); }
-  .btn-sm { min-height: 34px; padding: 0 .8rem; font-size: .84rem; border-radius: 8px; }
 
   .pill { display: inline-block; padding: .34rem .72rem; border-radius: 999px; font-size: .84rem; color: #dcdce4; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.1); transition: border-color .2s ease, color .2s ease, box-shadow .2s ease; }
   .pill:hover { color: #fff; border-color: rgba(168,85,247,.65); box-shadow: 0 0 16px -5px rgba(168,85,247,.9); }
@@ -213,12 +212,9 @@
       <a class="nav-link hover:text-white transition-colors" href="#contact">Contact</a>
       <button id="palBtn" type="button" class="glass rounded-lg px-2.5 h-8 flex items-center gap-2 hover:text-white hover:border-neon/60 transition-colors" aria-label="Open command palette"><kbd>⌘K</kbd></button>
     </div>
-    <div class="flex items-center gap-2 md:gap-0">
-      <a class="btn btn-ghost btn-sm" href="param-mehta-resume.pdf" target="_blank" rel="noopener">Resume</a>
-      <button id="menuBtn" class="md:hidden w-11 h-11 -mr-2 grid place-items-center text-snow" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
-      </button>
-    </div>
+    <button id="menuBtn" class="md:hidden w-11 h-11 -mr-2 grid place-items-center text-snow" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+    </button>
   </nav>
   <div id="mobileMenu" class="hidden md:hidden border-t border-white/[.07] px-4 py-2 text-ash">
     <a class="block py-3 hover:text-white" href="#projects">Projects</a>
@@ -232,6 +228,7 @@
   <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0 1 12 6.84c.85 0 1.7.11 2.5.34 1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></symbol>
   <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z"/></symbol>
   <symbol id="i-instagram" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/></g><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></g></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9"/></symbol>
 </svg>
 
@@ -263,6 +260,7 @@
         <a class="btn btn-ghost" href="https://github.com/param-m1" target="_blank" rel="noopener"><svg width="18" height="18" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
         <a class="btn btn-ghost" href="https://www.linkedin.com/in/param-mehta1" target="_blank" rel="noopener"><svg width="18" height="18" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a>
         <a class="btn btn-ghost" href="https://www.instagram.com/param_mehta144/" target="_blank" rel="noopener"><svg width="18" height="18" aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</a>
+        <a class="btn btn-ghost" href="param-mehta-resume.pdf" target="_blank" rel="noopener"><svg width="18" height="18" aria-hidden="true"><use href="#i-file"/></svg>Resume</a>
       </div>
     </div>
     <p id="graphLabel" class="hidden sm:block absolute right-6 bottom-6 font-mono text-[11px] text-ash/80" aria-hidden="true"></p>
