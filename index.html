@@ -68,6 +68,7 @@
   .btn-primary:hover { background: #a855f7; box-shadow: 0 0 38px -4px rgba(168,85,247,1); }
   .btn-ghost { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.14); color: #f4f4f7; }
   .btn-ghost:hover { border-color: rgba(168,85,247,.7); box-shadow: 0 0 26px -8px rgba(168,85,247,.8); background: rgba(168,85,247,.08); }
+  .btn-sm { min-height: 34px; padding: 0 .8rem; font-size: .84rem; border-radius: 8px; }
 
   .pill { display: inline-block; padding: .34rem .72rem; border-radius: 999px; font-size: .84rem; color: #dcdce4; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.1); transition: border-color .2s ease, color .2s ease, box-shadow .2s ease; }
   .pill:hover { color: #fff; border-color: rgba(168,85,247,.65); box-shadow: 0 0 16px -5px rgba(168,85,247,.9); }
@@ -212,9 +213,12 @@
       <a class="nav-link hover:text-white transition-colors" href="#contact">Contact</a>
       <button id="palBtn" type="button" class="glass rounded-lg px-2.5 h-8 flex items-center gap-2 hover:text-white hover:border-neon/60 transition-colors" aria-label="Open command palette"><kbd>⌘K</kbd></button>
     </div>
-    <button id="menuBtn" class="md:hidden w-11 h-11 -mr-2 grid place-items-center text-snow" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
-    </button>
+    <div class="flex items-center gap-2 md:gap-0">
+      <a class="btn btn-ghost btn-sm" href="param-mehta-resume.pdf" target="_blank" rel="noopener">Resume</a>
+      <button id="menuBtn" class="md:hidden w-11 h-11 -mr-2 grid place-items-center text-snow" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+    </div>
   </nav>
   <div id="mobileMenu" class="hidden md:hidden border-t border-white/[.07] px-4 py-2 text-ash">
     <a class="block py-3 hover:text-white" href="#projects">Projects</a>
@@ -956,6 +960,7 @@
     { t: 'GitHub profile', h: 'Open', go: 'https://github.com/param-m1' },
     { t: 'LinkedIn', h: 'Open', go: 'https://www.linkedin.com/in/param-mehta1' },
     { t: 'Instagram', h: 'Open', go: 'https://www.instagram.com/param_mehta144/' },
+    { t: 'Resume', h: 'PDF', go: 'param-mehta-resume.pdf' },
     { t: 'Email Param', h: 'Mail', go: 'mailto:iamparam31@gmail.com' }
   ];
   var palMatches = commands, palIndex = 0;
@@ -1224,7 +1229,7 @@ function trackOut(url) {
   goatcounter.count({ path: 'click/' + name, title: 'Opened ' + name, event: true });
 }
 document.addEventListener('click', function (e) {
-  var a = e.target.closest && e.target.closest('a[href^="http"], a[href^="mailto:"]');
+  var a = e.target.closest && e.target.closest('a[href^="http"], a[href^="mailto:"], a[href$=".pdf"]');
   if (a) trackOut(a.getAttribute('href'));
 });
 </script>
