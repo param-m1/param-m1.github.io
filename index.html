@@ -148,6 +148,17 @@
   .pane .media img { height: 100%; aspect-ratio: auto; }
   [data-cycle] .pane .media img { object-fit: contain; background: #ececec; }
   .view-tab { position: relative; overflow: hidden; }
+  .dvid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; background: #efe8d8; }
+  .dprog { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; z-index: 2; background: rgba(0,0,0,.25); }
+  #delphi .media-col .media-clip.stage { flex: none; aspect-ratio: 16 / 10; min-height: 0; }
+  .dsteps { display: grid; gap: .25rem; padding: .9rem; border-top: 1px solid rgba(255,255,255,.08); }
+  .dstep { display: none; width: 100%; text-align: left; padding: .6rem .75rem; border-radius: 10px; border: 1px solid transparent; transition: background .3s ease, border-color .3s ease; }
+  .dstep.on { display: block; background: rgba(168,85,247,.08); border-color: rgba(168,85,247,.35); }
+  .dstep b { display: block; font-size: .9rem; font-weight: 500; color: #f4f4f7; }
+  .dstep span { display: block; margin-top: .15rem; font-size: .82rem; line-height: 1.45; color: #a1a1aa; }
+  .dstep i { font-style: normal; font-family: "Geist Mono", monospace; font-size: .72rem; color: #c4b5fd; margin-right: .45rem; }
+  @media (min-width: 1024px) { .dsteps { flex: 1; align-content: center; grid-template-columns: 1fr 1fr; } .dstep { display: block; } .dstep:not(.on):hover { background: rgba(255,255,255,.03); } }
+  .dprog b { display: block; height: 100%; background: #a855f7; box-shadow: 0 0 8px #a855f7; transform-origin: left; transform: scaleX(0); }
   .cycling .view-tab[aria-pressed="true"]::after { content: ''; position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: #c084fc; transform-origin: left; animation: tabFill var(--cycle, 4200ms) linear both; }
   @keyframes tabFill { from { transform: scaleX(0); } to { transform: none; } }
 
@@ -336,6 +347,52 @@
             <ol id="vsList" class="mt-3 flex-1 flex flex-col justify-between gap-2.5"></ol>
             <p class="mt-4 font-mono text-[11px] text-ash">Replay of real results from the live demo. Open it to search anything.</p>
           </div></div>
+        </div>
+      </article>
+
+      <!-- Delphi -->
+      <article id="delphi" class="card reveal md:col-span-2 grid lg:grid-cols-[1.3fr_1fr]" data-views>
+        <div class="media-col border-b lg:border-b-0 lg:border-r border-white/[.08]">
+          <div class="flex items-center gap-2 px-4 h-9 border-b border-white/[.08] bg-black/40 font-mono text-[11px] text-ash">
+            <span class="w-2 h-2 rounded-full bg-neon shadow-[0_0_8px_#a855f7]"></span><span class="truncate">delphi / know thy code</span>
+            <span class="ml-auto shrink-0 flex gap-1">
+              <button type="button" class="view-tab px-2 py-0.5 rounded border border-white/10 hover:text-white" data-view="0" aria-pressed="true">Idea</button>
+              <button type="button" class="view-tab px-2 py-0.5 rounded border border-white/10 hover:text-white" data-view="1" aria-pressed="false">Review</button>
+              <button type="button" class="view-tab px-2 py-0.5 rounded border border-white/10 hover:text-white" data-view="2" aria-pressed="false">Gate</button>
+              <button type="button" class="view-tab hidden sm:block px-2 py-0.5 rounded border border-white/10 hover:text-white" data-view="3" aria-pressed="false">Nonprofits</button>
+            </span>
+          </div>
+          <div class="media-clip stage">
+            <div class="pane on" data-pane><video class="dvid" muted playsinline preload="none" poster="delphi-idea.jpg" data-src="delphi-idea.mp4" aria-label="Delphi demo: typing a calculator idea into the New project page, then Claude turning it into four tickets, each explaining why it matters and what done means."></video></div>
+            <div class="pane" data-pane><video class="dvid" muted playsinline preload="none" poster="delphi-review.jpg" data-src="delphi-review.mp4" aria-label="Delphi demo: the bot's senior review on a real GitHub pull request, flagging eval() on user input as code injection with a question and a first hint."></video></div>
+            <div class="pane" data-pane><video class="dvid" muted playsinline preload="none" poster="delphi-gate.jpg" data-src="delphi-gate.mp4" aria-label="Delphi demo: answering three questions about the pull request on the gate page, passing, and the PR being approved with the skill map updating."></video></div>
+            <div class="pane" data-pane><video class="dvid" muted playsinline preload="none" poster="delphi-nonprofits.jpg" data-src="delphi-nonprofits.mp4" aria-label="Delphi demo: the Calgary nonprofit board preview, with sample commissions that unlock after 15 approved pull requests."></video></div>
+            <span class="dprog" aria-hidden="true"><b></b></span>
+          </div>
+          <div class="dsteps">
+            <button type="button" class="dstep on" data-step="0"><b><i>01</i>Idea to tickets</b><span>Describe a project in plain words. Claude returns 3–5 tickets that say why each piece matters, never how.</span></button>
+            <button type="button" class="dstep" data-step="1"><b><i>02</i>Socratic review</b><span>Open a real PR and the GitHub App reviews the diff: a CWE-tagged finding, a question and a hint ladder.</span></button>
+            <button type="button" class="dstep" data-step="2"><b><i>03</i>Comprehension gate</b><span>Answer 2–3 questions about your own diff. Every answer needs 70 or more, then the bot approves the PR.</span></button>
+            <button type="button" class="dstep" data-step="3"><b><i>04</i>Nonprofit board</b><span>A preview of what's next: Calgary nonprofits post real tickets for learners with approved work.</span></button>
+          </div>
+        </div>
+        <div class="p-6 sm:p-8 flex flex-col">
+          <p class="font-mono text-xs text-lilac mb-2">Hack the Change 2026, Calgary</p>
+          <h3 class="text-2xl sm:text-3xl font-semibold tracking-tight">Delphi</h3>
+          <p class="mt-4 text-ash leading-relaxed">A coding mentor that won't approve your pull request until you can explain your own code. Claude turns an idea into tickets, a GitHub App posts a Socratic review on your real PR, and the merge stays blocked until you answer questions about your own diff. It never writes the code for you.</p>
+          <p class="mt-3 text-ash leading-relaxed">Built in 26 hours with Neel Kochhar. I built the learner side: the dashboard, gate screen and portfolio, plus the progress API behind them.</p>
+          <dl class="mt-6 grid grid-cols-3 gap-3">
+            <div><dd data-count class="text-lg sm:text-xl font-semibold text-snow">26h</dd><dt class="font-mono text-[11px] text-ash">to build</dt></div>
+            <div><dd data-count class="text-lg sm:text-xl font-semibold text-snow">70</dd><dt class="font-mono text-[11px] text-ash">min score to pass</dt></div>
+            <div><dd data-count class="text-lg sm:text-xl font-semibold text-snow">0</dd><dt class="font-mono text-[11px] text-ash">lines it writes for you</dt></div>
+          </dl>
+          <ul class="mt-6 flex flex-wrap gap-1.5 text-xs font-mono text-lilac/90">
+            <li>Python</li><li aria-hidden="true">·</li><li>FastAPI</li><li aria-hidden="true">·</li><li>SQLModel</li><li aria-hidden="true">·</li><li>Claude API</li><li aria-hidden="true">·</li><li>GitHub App</li><li aria-hidden="true">·</li><li>React</li><li aria-hidden="true">·</li><li>TypeScript</li><li aria-hidden="true">·</li><li>Tailwind</li>
+          </ul>
+          <div class="mt-auto pt-7 flex flex-wrap gap-3">
+            <a class="btn btn-primary" href="https://youtu.be/YiKDJ3Ivrbg" target="_blank" rel="noopener">Watch the pitch <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-ghost" href="https://github.com/n3el-k/delphi" target="_blank" rel="noopener"><svg width="18" height="18" aria-hidden="true"><use href="#i-github"/></svg>Source</a>
+          </div>
         </div>
       </article>
 
@@ -623,6 +680,58 @@
       whenVisible(card, function (v) { seen = v; run(); });
     }
   });
+
+  // Delphi: play the demo clip for the open tab while the card is on screen, then move on to the next step
+  (function () {
+    var card = document.getElementById('delphi');
+    if (!card) return;
+    var vids = [].slice.call(card.querySelectorAll('video'));
+    var tabs = card.querySelectorAll('[data-view]');
+    var bar = card.querySelector('.dprog b');
+    var steps = card.querySelectorAll('[data-step]');
+    steps.forEach(function (s) {
+      s.addEventListener('click', function () { tabs[Number(s.dataset.step)].click(); });
+    });
+    var cur = 0, visible = false, pinned = false, auto = false, raf = 0;
+    function load(v) { if (!v.getAttribute('src')) v.src = v.dataset.src; }
+    function tick() {
+      var v = vids[cur];
+      bar.style.transform = 'scaleX(' + (v.duration ? v.currentTime / v.duration : 0) + ')';
+      raf = visible ? requestAnimationFrame(tick) : 0;
+    }
+    function play() {
+      vids.forEach(function (v, n) { if (n !== cur) v.pause(); });
+      var v = vids[cur];
+      if (reduce) { load(v); return; }
+      if (!visible) { v.pause(); return; }
+      load(v);
+      var next = vids[(cur + 1) % vids.length];
+      next.preload = 'auto'; load(next);
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+      if (!raf) tick();
+    }
+    if (reduce) vids.forEach(function (v) { v.controls = true; });
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        if (!auto) pinned = true;
+        cur = Number(tab.dataset.view);
+        steps.forEach(function (s, n) { s.classList.toggle('on', n === cur); });
+        if (vids[cur].readyState) vids[cur].currentTime = 0;
+        play();
+      });
+    });
+    vids.forEach(function (v) {
+      v.addEventListener('ended', function () {
+        // Steps the hidden Nonprofits tab can't reach on phones are skipped
+        var n = (cur + 1) % vids.length;
+        if (pinned) { v.currentTime = 0; play(); return; }
+        if (!tabs[n].offsetParent) n = 0;
+        auto = true; tabs[n].click(); auto = false;
+      });
+    });
+    whenVisible(card, function (v) { visible = v; play(); });
+  })();
 
   // Hero: split the name into letters, then play the entrance
   document.querySelectorAll('[data-split]').forEach(function (h) {
@@ -953,6 +1062,8 @@
     { t: 'Contact', h: 'Section', go: '#contact' },
     { t: 'UCalgary Wayfinder: live app', h: 'Open', go: 'https://ucalgary-wayfinder.pages.dev/app/' },
     { t: 'Vector Search: live app', h: 'Open', go: 'https://fastapi-vector-recommender.pages.dev/' },
+    { t: 'Delphi: watch the pitch', h: 'YouTube', go: 'https://youtu.be/YiKDJ3Ivrbg' },
+    { t: 'Delphi: source', h: 'GitHub', go: 'https://github.com/n3el-k/delphi' },
     { t: 'Currency Converter API: source', h: 'GitHub', go: 'https://github.com/param-m1/currency-converter-api' },
     { t: 'Haven: source', h: 'GitHub', go: 'https://github.com/param-m1/Haven' },
     { t: 'GitHub profile', h: 'Open', go: 'https://github.com/param-m1' },
