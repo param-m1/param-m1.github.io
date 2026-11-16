@@ -45,8 +45,7 @@
   .skip:focus { top: 12px; }
 
   /* Film grain over everything */
-  .grain { position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: .055; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); animation: grain 1.2s steps(6) infinite; }
-  @keyframes grain { 0% { transform: translate(0,0); } 20% { transform: translate(-3%,2%); } 40% { transform: translate(2%,-3%); } 60% { transform: translate(-2%,-1%); } 80% { transform: translate(3%,3%); } 100% { transform: translate(0,0); } }
+  .grain { position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .055; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
   /* Nav */
   .nav { position: fixed; top: 14px; left: 50%; z-index: 50; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; padding: 5px; border-radius: 999px; background: rgba(14,14,18,.62); border: 1px solid var(--line); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); transition: transform .5s var(--ease), opacity .4s ease; }
@@ -70,6 +69,7 @@
   .silk { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; opacity: 0; transition: opacity 1.8s ease; }
   .gl .silk { opacity: 1; }
   .gl .aurora, .gl .spot { opacity: 0; transition: opacity 1.8s ease; }
+  .gl-done .aurora, .gl-done .spot { display: none; }
   .spot { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(520px circle at var(--x, 70%) var(--y, 30%), rgba(167,139,250,.13), transparent 60%); transition: background .2s linear; }
   .hero::after { content: ""; position: absolute; inset: auto 0 0 0; height: 30vh; z-index: -1; background: linear-gradient(to bottom, transparent, var(--bg)); }
   .eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; font: 400 .8rem/1.4 var(--mono); color: var(--muted); letter-spacing: .02em; }
@@ -114,7 +114,7 @@
   /* Work: stacked project cards */
   .stack { display: grid; gap: 24px; padding-bottom: 4vh; }
   .proj { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); border-radius: 28px; background: var(--surface); border: 1px solid var(--line); overflow: hidden; transform-origin: 50% 0; }
-  .proj::before { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; border-radius: inherit; background: #000; opacity: var(--dim-o, 0); }
+  .proj > .dim { position: absolute; inset: 0; z-index: 3; pointer-events: none; border-radius: inherit; background: #000; opacity: 0; will-change: opacity; }
   .proj::after { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(167,139,250,.5), transparent); }
   .proj-text { display: flex; flex-direction: column; padding: clamp(22px, 3vw, 40px); }
   .proj-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; font: 400 .78rem var(--mono); color: var(--muted); }
@@ -141,7 +141,7 @@
   }
   @media (min-width: 900px) and (min-height: 660px) {
     .stack { gap: 14vh; }
-    .proj { position: sticky; top: calc(86px + var(--i) * 18px); height: min(calc(100svh - 120px), 720px); }
+    .proj { position: sticky; top: calc(86px + var(--i) * 18px); height: min(calc(100svh - 120px), 720px); will-change: transform; }
   }
 
   /* Delphi segmented control over the clip */
@@ -217,7 +217,7 @@
 
   /* Contact */
   .contact { padding: clamp(100px, 18vh, 190px) 0 0; overflow: hidden; isolation: isolate; }
-  .contact::before { content: ""; position: absolute; z-index: -1; right: -20vmax; top: 10%; width: 60vmax; height: 60vmax; border-radius: 50%; background: radial-gradient(circle, rgba(109,40,217,.35), transparent 65%); filter: blur(60px); pointer-events: none; }
+  .contact::before { content: ""; position: absolute; z-index: -1; right: -20vmax; top: 10%; width: 60vmax; height: 60vmax; border-radius: 50%; background: radial-gradient(circle, rgba(109,40,217,.28), transparent 65%); pointer-events: none; }
   .contact .kicker { font: 400 .8rem var(--mono); color: var(--muted); }
   .big { margin: .5rem 0 0; font-weight: 500; font-size: clamp(3rem, 11vw, 9.5rem); line-height: .92; letter-spacing: -.06em; }
   .big .serif { color: var(--accent); letter-spacing: -.03em; }
@@ -544,11 +544,11 @@
     if (!gl) return;
     var vs = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
     var fs = [
-      'precision highp float;',
+      'precision mediump float;',
       'uniform vec2 r;uniform float t;uniform vec2 m;uniform float ms;uniform vec3 rip;',
       'float h(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}',
       'float n(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),u.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),u.x),u.y);}',
-      'float fbm(vec2 p){float v=0.,a=.5;mat2 R=mat2(.8,.6,-.6,.8);for(int i=0;i<5;i++){v+=a*n(p);p=R*p*2.02;a*=.5;}return v;}',
+      'float fbm(vec2 p){float v=0.,a=.5;mat2 R=mat2(.8,.6,-.6,.8);for(int i=0;i<4;i++){v+=a*n(p);p=R*p*2.02;a*=.5;}return v;}',
       'void main(){',
       '  vec2 uv=gl_FragCoord.xy/r;',
       '  vec2 p=(gl_FragCoord.xy-.5*r)/r.y;',
@@ -585,10 +585,13 @@
     var loc = gl.getAttribLocation(prog, 'a');
     gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
     var U = {}; ['r', 't', 'm', 'ms', 'rip'].forEach(function (k) { U[k] = gl.getUniformLocation(prog, k); });
-    // Drawn at reduced resolution; the blur of the silk hides it and it keeps laptops cool
-    var scale = Math.min(window.devicePixelRatio || 1, 2) * .5, W = 0, H = 0;
+    // Drawn at low resolution and stretched; the softness of the silk hides it. The pixel budget is
+    // capped so big or high-DPI screens cost no more than a small one, and it drops further if frames run slow.
+    var budget = 260000, scale = 1, W = 0, H = 0;
     function size() {
-      W = Math.max(1, Math.round(canvas.clientWidth * scale)); H = Math.max(1, Math.round(canvas.clientHeight * scale));
+      var cw = canvas.clientWidth || 1, ch = canvas.clientHeight || 1;
+      scale = Math.min(.5, Math.sqrt(budget / (cw * ch)));
+      W = Math.max(1, Math.round(cw * scale)); H = Math.max(1, Math.round(ch * scale));
       canvas.width = W; canvas.height = H; gl.viewport(0, 0, W, H);
     }
     size(); addEventListener('resize', size);
@@ -604,7 +607,14 @@
       var b = canvas.getBoundingClientRect();
       rip = [(e.clientX - b.left) * scale, (b.bottom - e.clientY) * scale, (performance.now() - t0) / 1000];
     });
+    var last = 0, slow = 0, fast = 0;
     function frame(now) {
+      raf = on ? requestAnimationFrame(frame) : 0;
+      var dt = now - last;
+      if (dt < 31) return; // 30fps is plenty for slow-moving silk
+      last = now;
+      // Adapt: if frames keep arriving late the GPU is struggling, so draw fewer pixels
+      if (dt > 48 && dt < 500) { if (++slow > 20 && budget > 60000) { budget *= .6; size(); slow = 0; } } else slow = 0;
       var t = (now - t0) / 1000;
       // With no pointer (phones), the bend drifts slowly on its own
       if (!fine) { tx = W * (.62 + .2 * Math.sin(t * .23)); ty = H * (.55 + .2 * Math.cos(t * .17)); }
@@ -612,17 +622,18 @@
       gl.uniform2f(U.r, W, H); gl.uniform1f(U.t, t); gl.uniform2f(U.m, mx, my); gl.uniform1f(U.ms, strength);
       gl.uniform3f(U.rip, rip[0], rip[1], rip[2]);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
-      raf = on ? requestAnimationFrame(frame) : 0;
     }
     whenVisible(hero, function (vis) { on = vis && !document.hidden; if (on && !raf) raf = requestAnimationFrame(frame); }, .01);
     document.addEventListener('visibilitychange', function () { on = !document.hidden; if (on && !raf) raf = requestAnimationFrame(frame); });
     requestAnimationFrame(function () { root.classList.add('gl'); });
+    setTimeout(function () { root.classList.add('gl-done'); }, 2200);
   })();
 
   // Hero light follows the pointer
   var hero = document.querySelector('.hero'), spot = document.querySelector('.spot');
   if (fine && !reduce) {
     hero.addEventListener('pointermove', function (e) {
+      if (root.classList.contains('gl-done')) return;
       var r = hero.getBoundingClientRect();
       spot.style.setProperty('--x', (e.clientX - r.left) + 'px');
       spot.style.setProperty('--y', (e.clientY - r.top) + 'px');
@@ -650,20 +661,30 @@
   // Stacked project cards: each one sinks back as the next slides over it
   var cards = [].slice.call(document.querySelectorAll('.proj'));
   var stacking = matchMedia('(min-width: 900px) and (min-height: 660px)');
+  var stickTops = [], stackQueued = false, lastP = [];
+  var dims = cards.map(function (c) { var d = document.createElement('i'); d.className = 'dim'; d.setAttribute('aria-hidden', 'true'); c.appendChild(d); return d; });
+  function measure() { stickTops = cards.map(function (c) { return parseFloat(getComputedStyle(c).top) || 0; }); }
   function stack() {
-    cards.forEach(function (card, i) {
+    stackQueued = false;
+    var on = stacking.matches && !reduce, vh = innerHeight;
+    var ps = cards.map(function (card, i) {
       var next = cards[i + 1];
-      if (!next || !stacking.matches || reduce) { card.style.transform = ''; card.style.setProperty('--dim-o', 0); return; }
-      var stickTop = parseFloat(getComputedStyle(next).top) || 0;
-      var nt = next.getBoundingClientRect().top;
-      var p = Math.min(Math.max(1 - (nt - stickTop) / (innerHeight - stickTop), 0), 1);
-      card.style.transform = 'scale(' + (1 - p * .06) + ')';
-      card.style.setProperty('--dim-o', (p * .55).toFixed(3));
+      if (!next || !on) return 0;
+      var st = stickTops[i + 1], nt = next.getBoundingClientRect().top;
+      return Math.min(Math.max(1 - (nt - st) / (vh - st), 0), 1);
+    });
+    cards.forEach(function (card, i) {
+      var p = Math.round(ps[i] * 1000) / 1000;
+      if (p === lastP[i]) return;
+      lastP[i] = p;
+      card.style.transform = p ? 'scale(' + (1 - p * .06) + ')' : '';
+      dims[i].style.opacity = (p * .55).toFixed(3);
     });
   }
-  addEventListener('scroll', stack, { passive: true });
-  addEventListener('resize', stack);
-  stack();
+  function queueStack() { if (!stackQueued) { stackQueued = true; requestAnimationFrame(stack); } }
+  addEventListener('scroll', queueStack, { passive: true });
+  addEventListener('resize', function () { measure(); queueStack(); });
+  measure(); stack();
 
   // Stats count up when they come into view, then again every 10-15 seconds while they stay on screen
   if ('IntersectionObserver' in window && !reduce) {
@@ -711,19 +732,21 @@
     root.classList.add('has-cursor');
     var cur = document.querySelector('.cursor'), dotEl = cur.querySelector('i'), label = cur.querySelector('b');
     var mx = -100, my = -100, cx = -100, cy = -100;
-    addEventListener('pointermove', function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
-    (function loop() {
+    var curRaf = 0;
+    function loop() {
       cx += (mx - cx) * .2; cy += (my - cy) * .2;
+      if (Math.abs(mx - cx) < .1 && Math.abs(my - cy) < .1) { cx = mx; cy = my; curRaf = 0; }
+      else curRaf = requestAnimationFrame(loop);
       cur.style.transform = 'translate(' + cx + 'px,' + cy + 'px)';
-      requestAnimationFrame(loop);
-    })();
+    }
+    addEventListener('pointermove', function (e) { mx = e.clientX; my = e.clientY; if (!curRaf) curRaf = requestAnimationFrame(loop); }, { passive: true });
     document.addEventListener('pointerover', function (e) {
       var v = e.target.closest('[data-cursor]'), l = e.target.closest('a, button');
       cur.classList.toggle('view', Boolean(v));
       cur.classList.toggle('link', Boolean(l) && !v);
       if (v) label.textContent = v.dataset.cursor;
     });
-    document.addEventListener('pointerleave', function () { mx = my = -100; });
+    document.addEventListener('pointerleave', function () { mx = my = -100; if (!curRaf) curRaf = requestAnimationFrame(loop); });
   }
 
   // Copy email
